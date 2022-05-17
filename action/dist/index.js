@@ -17499,6 +17499,8 @@ function is_dir(path) {
   }
 }
 
+console.log('BOOPYsss1.5');
+
 const zip = new AdmZip();
 
 const addFiles = item => {
@@ -17537,7 +17539,7 @@ if(!preview) {
 
 
 // Publish
-console.log('BOOPYsss');
+console.log('BOOPYsss222');
 
 
 
@@ -17552,6 +17554,8 @@ try {
 } catch (error) {
   core.setFailed(error.message);
 }
+
+console.log('blaaaaaa');
 
 const assert = __nccwpck_require__(9491);
 const axios = (__nccwpck_require__(3999)["default"]);
@@ -17583,7 +17587,7 @@ async function readChangeLog(filename) {
   return out;
 }
 
-console.log('BOOPYsss222');
+console.log('BOOPYsss3333');
 
 async function upload_release() {
   const folderName = path.basename(`../${__dirname}`);

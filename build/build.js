@@ -55,6 +55,8 @@ function is_dir(path) {
   }
 }
 
+console.log('BOOPYsss1.5');
+
 const zip = new AdmZip();
 
 const addFiles = item => {
@@ -93,7 +95,7 @@ if(!preview) {
 
 
 // Publish
-console.log('BOOPYsss');
+console.log('BOOPYsss222');
 
 
 
@@ -108,6 +110,8 @@ try {
 } catch (error) {
   core.setFailed(error.message);
 }
+
+console.log('blaaaaaa');
 
 const assert = require('assert');
 const axios = require('axios').default;
@@ -139,7 +143,7 @@ async function readChangeLog(filename) {
   return out;
 }
 
-console.log('BOOPYsss222');
+console.log('BOOPYsss3333');
 
 async function upload_release() {
   const folderName = path.basename(`../${__dirname}`);
