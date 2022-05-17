@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Bundle and release
-        run: node action/dist/index.js
+      # - name: Bundle and release
+      - run: node action/dist/index.js
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
