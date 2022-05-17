@@ -11,8 +11,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
-      - name: Hello world action step
-        uses: ./action # Uses an action in the root directory
-        id: hello
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Bundle and release
+        shell: bash
+        run: |
+          node16 action/dist/index.js ${{ secrets.GITHUB_TOKEN }}
