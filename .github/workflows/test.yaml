@@ -16,6 +16,6 @@ jobs:
         with:
           node-version: 16
       # - name: Bundle and release
-      - run: node action/dist/index.js
+      - run: node action/dist/index.js -v 1.2.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

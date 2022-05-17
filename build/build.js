@@ -1,21 +1,25 @@
 const fs = require('fs');
 const AdmZip = require('adm-zip');
 const path = require('path');
+const core = require('@actions/core');
+const github = require('@actions/github');
 const minimatch = require("minimatch");
 const commandLineArgs = require('command-line-args');
-// const pjson = require('../../package.json');
-const pjson = {
-  version: "1.3.0"
-}
 const options = commandLineArgs([
   { name: 'preview', alias: 'p', type: Boolean, defaultValue: false },
+  { name: 'version', alias: 'v', type: String },
 ]);
 
+if(!options.version) {
+  core.error('Version argument is required');
+}
+
+//console.log(__dirname); // C:\gittest2\build
 // Config
 const out_dir = __dirname + '/dist';
-const name = path.basename(__dirname);
-const version = pjson.version;
-const root_folder = path.resolve(__dirname, '..', '..');
+const version = options.version;
+// const root_folder = path.resolve(__dirname, '..', '..');
+const root_folder = __dirname;
 const ignore_list = [
   '**/node_modules',
   '**/.*',
@@ -58,10 +62,10 @@ const addFiles = item => {
     } else {
       const folderName = item.substr(0, item.lastIndexOf('/'));
       if(options.preview) {
-        console.log(`${root_folder}/${item}`, `${name}/${folderName}`);
+        console.log(`${root_folder}/${item}`, `${github.context.repo.repo}/${folderName}`);
       } else {
-        console.log(`Zipping: ${root_folder}/${item} into ${name}/${folderName}`);
-        zip.addLocalFile(`${root_folder}/${item}`, `${name}/${folderName}`);
+        console.log(`Zipping: ${root_folder}/${item} into ${github.context.repo.repo}/${folderName}`);
+        zip.addLocalFile(`${root_folder}/${item}`, `${github.context.repo.repo}/${folderName}`);
       }
     }
   }
@@ -75,7 +79,7 @@ if(!options.preview) {
   if (!fs.existsSync(out_dir)) {
     fs.mkdirSync(out_dir);
   }
-  zip.writeZip(`${out_dir}/${name}_v${version}.zip`);
+  zip.writeZip(`${out_dir}/${github.context.repo.repo}_v${version}.zip`);
 }
 
 
@@ -100,47 +104,17 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 const util = require('util');
 fs.readFile = util.promisify(fs.readFile);
 
-// Read changelog.txt and pull the version and changes from it
-async function readChangeLog(filename) {
-  let changelogContents = await fs.readFile(filename);
-  let out = [];
-  let currentLine = { changes: [] };
-  let lines = changelogContents.toString().split('\n');
-  lines.forEach(line => {
-    line = line.trim();
-    if(line == '') {
-      out.push(currentLine);
-      currentLine = { changes: [] };
-    } else if(!line.startsWith('-')) {
-      let match = line.match(/[^:]*/);
-      currentLine.version = match && match[0] || '???';
-    } else {
-      let change = line.match(/\-+\s*(.*)/);
-      currentLine.changes.push(change && change[1]);
-    }
-  });
-  return out;
-}
-
 async function upload_release() {
   const folderName = path.basename(`../${__dirname}`);
   let changes;
-  let version = `v${pjson.version}`;
+  let version = `v${options.version}`;
   let changelog = 'New Update';
-  console.log(folderName);
-  const filename = path.resolve(folderName, '../..', 'changelog.txt');
-  console.log(filename);
-  if(fs.existsSync(filename)) {
-    changes = await readChangeLog(filename);
-    version = changes[0].version;
-    changelog = changes[0].changes.map(v => `- ${v}`).reduce((a,b,c) => `${a}\n${b}`);
-  }
+  // const filename = path.resolve(folderName, '../..', 'changelog.txt');
   const archiveName = `${folderName}_${version}.zip`;
   let result;
   result = await octokit.request('POST /repos/{owner}/{repo}/releases', {
-    owner: 'TheHorscht',
-    // repo: folderName,
-    repo: 'gittest2',
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
     tag_name: version,
     name: version,
     body: changelog,
