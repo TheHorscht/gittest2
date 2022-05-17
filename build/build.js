@@ -139,7 +139,7 @@ async function readChangeLog(filename) {
   return out;
 }
 
-console.log('BOOPYsss');
+console.log('BOOPYsss222');
 
 async function upload_release() {
   const folderName = path.basename(`../${__dirname}`);
