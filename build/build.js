@@ -1,3 +1,8 @@
+// import * as fs from 'fs';
+// import * as AdmZip from 'adm-zip';
+// import * as path from 'path';
+// import * as minimatch from 'minimatch';
+// import * as pjson from './package.json';
 const fs = require('fs');
 const AdmZip = require('adm-zip');
 const path = require('path');
@@ -17,7 +22,7 @@ args.forEach(val => {
 const out_dir = __dirname + '/dist';
 const name = path.basename(__dirname);
 const version = pjson.version;
-const root_folder = __dirname;
+const root_folder = path.resolve(__dirname, '..');
 const ignore_list = [
   '**/node_modules',
   '**/.*',
@@ -30,6 +35,8 @@ const ignore_list = [
   'unit_test.lua',
   'unit_tests.lua',
   'xxx.lua',
+  'action',
+  'build',
 ];
 // Config end
 
@@ -79,7 +86,7 @@ if(!preview) {
 
 
 
-
+// process.exit(-1);
 
 
 
@@ -89,14 +96,15 @@ if(!preview) {
 
 
 
-import { getInput, setFailed } from '@actions/core';
-import { context } from '@actions/github';
+const core = require('@actions/core');
+// import { getInput, setFailed } from '@actions/core';
+// import { context } from '@actions/github';
 
 let token;
 try {
-  token = getInput('token', { required: true });
+  token = core.getInput('token', { required: true });
 } catch (error) {
-  setFailed(error.message);
+  core.setFailed(error.message);
 }
 
 const assert = require('assert');
