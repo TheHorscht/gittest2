@@ -4,7 +4,6 @@ inputs:
   token:  # id of input
     description: 'Token'
     required: true
-    default: ${{ secrets.GITHUB_TOKEN }}
 runs:
   using: 'node16'
   main: './dist/build.js'
