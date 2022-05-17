@@ -12,3 +12,5 @@ jobs:
       - name: Hello world action step
         uses: ./action # Uses an action in the root directory
         id: hello
+        with:
+          - token: ${{ secrets.GITHUB_TOKEN }}
