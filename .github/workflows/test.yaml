@@ -13,4 +13,4 @@ jobs:
         uses: ./action # Uses an action in the root directory
         id: hello
         with:
-          - token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
