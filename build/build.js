@@ -71,6 +71,7 @@ const addFiles = item => {
       if(preview) {
         console.log(`${root_folder}/${item}`, `${name}/${folderName}`);
       } else {
+        console.log(`Zipping: ${root_folder}/${item} into ${name}/${folderName}`);
         zip.addLocalFile(`${root_folder}/${item}`, `${name}/${folderName}`);
       }
     }
@@ -112,8 +113,6 @@ try {
 } catch (error) {
   core.setFailed(error.message);
 }
-
-console.log('blaaaaaa');
 
 const assert = require('assert');
 const axios = require('axios').default;
