@@ -20932,6 +20932,8 @@ const options = commandLineArgs([
   { name: 'version', alias: 'v', type: String },
 ]);
 
+let repo = github.context.repo.repo;
+
 if(!options.version) {
   core.error('Version argument is required');
 }
@@ -20984,16 +20986,17 @@ const addFiles = item => {
     } else {
       const folderName = item.substr(0, item.lastIndexOf('/'));
       if(options.preview) {
-        console.log(`${root_folder}/${item}`, `${github.context.repo.repo}/${folderName}`);
+        console.log(`${root_folder}/${item}`, `${repo}/${folderName}`);
       } else {
-        console.log(`Zipping: ${root_folder}/${item} into ${github.context.repo.repo}/${folderName}`);
-        zip.addLocalFile(`${root_folder}/${item}`, `${github.context.repo.repo}/${folderName}`);
+        console.log(`Zipping: ${root_folder}/${item} into ${repo}/${folderName}`);
+        zip.addLocalFile(`${root_folder}/${item}`, `${repo}/${folderName}`);
       }
     }
   }
 };
 
-fs.readdirSync(root_folder).forEach(entry => {
+fs.readdirSync(root_folder + "/../").forEach(entry => {
+  console.log(entry);
   addFiles(entry);
 });
 
@@ -21001,7 +21004,7 @@ if(!options.preview) {
   if (!fs.existsSync(out_dir)) {
     fs.mkdirSync(out_dir);
   }
-  zip.writeZip(`${out_dir}/${github.context.repo.repo}_v${version}.zip`);
+  zip.writeZip(`${out_dir}/${repo}_v${version}.zip`);
 }
 
 
@@ -21036,12 +21039,13 @@ async function upload_release() {
   let result;
   result = await octokit.request('POST /repos/{owner}/{repo}/releases', {
     owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
+    repo: repo,
     tag_name: version,
     name: version,
     body: changelog,
   });
   assert(result.status == 201);
+  console.log("BOOOOOP: " + path.resolve(__dirname, 'dist/', archiveName));
   let file = await fs.readFile(path.resolve(__dirname, 'dist/', archiveName));
   let uri = uriTemplate.parse(result.data.upload_url);
   result = await axios.post(uri.expand({ name: archiveName, label: archiveName }), file, {
