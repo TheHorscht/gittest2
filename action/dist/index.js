@@ -17505,7 +17505,7 @@ const addFiles = item => {
     } else {
       const folderName = item.substr(0, item.lastIndexOf('/'));
       if(preview) {
-        console.log(item);
+        console.log(`${root_folder}/${item}`, `${name}/${folderName}`);
       } else {
         zip.addLocalFile(`${root_folder}/${item}`, `${name}/${folderName}`);
       }
@@ -17527,7 +17527,9 @@ if(!preview) {
 
 
 
-// process.exit(-1);
+if(preview) {
+  process.exit(-1);
+}
 
 
 
