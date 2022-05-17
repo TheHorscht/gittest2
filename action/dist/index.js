@@ -17581,6 +17581,8 @@ async function readChangeLog(filename) {
   return out;
 }
 
+console.log('BOOPYsss');
+
 async function upload_release() {
   const folderName = path.basename(`../${__dirname}`);
   let changes;
@@ -17590,6 +17592,7 @@ async function upload_release() {
   core.info(folderName);
   const filename = path.resolve(folderName, '../..', 'changelog.txt');
   core.info(filename);
+  console.log('BOOPY');
   if(fs.existsSync(filename)) {
     changes = await readChangeLog(filename);
     version = changes[0].version;
