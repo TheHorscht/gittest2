@@ -9,7 +9,6 @@ const pjson = {
 }
 const options = commandLineArgs([
   { name: 'preview', alias: 'p', type: Boolean, defaultValue: false },
-  { name: 'token', alias: 't', type: String, },
 ]);
 
 // Config
@@ -97,7 +96,7 @@ const assert = require('assert');
 const axios = require('axios').default;
 const uriTemplate = require('uri-template');
 const { Octokit } = require('@octokit/core');
-const octokit = new Octokit({ auth: options.token });
+const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 const util = require('util');
 fs.readFile = util.promisify(fs.readFile);
 
@@ -152,7 +151,7 @@ async function upload_release() {
   result = await axios.post(uri.expand({ name: archiveName, label: archiveName }), file, {
     headers: {
       'Accept': 'application/vnd.github.v3+json',
-      'Authorization': `token ${options.token}`,
+      'Authorization': `token ${process.env.GITHUB_TOKEN}`,
       'Content-Type': 'application/zip, application/octet-stream',
     },
   }).catch(err => {

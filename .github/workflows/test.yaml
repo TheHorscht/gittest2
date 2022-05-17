@@ -17,5 +17,7 @@ jobs:
           node-version: 16
       - name: Bundle and release
         shell: bash
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          node action/dist/index.js -t ${{ secrets.GITHUB_TOKEN }}
+          node action/dist/index.js
