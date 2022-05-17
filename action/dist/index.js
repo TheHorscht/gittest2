@@ -2113,7 +2113,7 @@ __nccwpck_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(25);
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
 
-const token = core.getInput('token', { required: true });
+const token = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('token', { required: true });
 console.log(token);
 
 })();
