@@ -17446,7 +17446,7 @@ const path = __nccwpck_require__(1017);
 const minimatch = __nccwpck_require__(9219);
 // const pjson = require('../../package.json');
 const pjson = {
-  version: "1.2.0"
+  version: "1.3.0"
 }
 
 let preview = false;

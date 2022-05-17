@@ -10,7 +10,7 @@ const path = require('path');
 const minimatch = require("minimatch");
 // const pjson = require('../../package.json');
 const pjson = {
-  version: "1.2.0"
+  version: "1.3.0"
 }
 
 let preview = false;
