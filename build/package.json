@@ -9,6 +9,7 @@
   "author": "TheHorscht <realhorscht+github@gmail.com> (https://github.com/TheHorscht)",
   "license": "ISC",
   "dependencies": {
+    "@actions/core": "^1.8.2",
     "adm-zip": "^0.5.9",
     "minimatch": "^5.1.0"
   }
