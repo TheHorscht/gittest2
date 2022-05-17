@@ -14,4 +14,4 @@ jobs:
       - name: Bundle and release
         shell: bash
         run: |
-          node16 action/dist/index.js ${{ secrets.GITHUB_TOKEN }}
+          node action/dist/index.js ${{ secrets.GITHUB_TOKEN }}
