@@ -17233,14 +17233,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 8884:
-/***/ ((module) => {
-
-module.exports = eval("require")("../../package.json");
-
-
-/***/ }),
-
 /***/ 354:
 /***/ ((module) => {
 
@@ -17452,7 +17444,10 @@ const fs = __nccwpck_require__(7147);
 const AdmZip = __nccwpck_require__(329);
 const path = __nccwpck_require__(1017);
 const minimatch = __nccwpck_require__(9219);
-const pjson = __nccwpck_require__(8884);
+// const pjson = require('../../package.json');
+const pjson = {
+  version: "v1.0.0"
+}
 
 let preview = false;
 

@@ -8,7 +8,10 @@ const fs = require('fs');
 const AdmZip = require('adm-zip');
 const path = require('path');
 const minimatch = require("minimatch");
-const pjson = require('../../package.json');
+// const pjson = require('../../package.json');
+const pjson = {
+  version: "v1.0.0"
+}
 
 let preview = false;
 
