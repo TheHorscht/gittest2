@@ -1,3 +1,5 @@
+
+console.log('BOOPYsss');
 // import * as fs from 'fs';
 // import * as AdmZip from 'adm-zip';
 // import * as path from 'path';
@@ -91,7 +93,7 @@ if(!preview) {
 
 
 // Publish
-
+console.log('BOOPYsss');
 
 
 
@@ -144,11 +146,9 @@ async function upload_release() {
   let changes;
   let version = `v${pjson.version}`;
   let changelog = 'New Update';
-  core.info('BOOP');
-  core.info(folderName);
+  console.log(folderName);
   const filename = path.resolve(folderName, '../..', 'changelog.txt');
-  core.info(filename);
-  console.log('BOOPY');
+  console.log(filename);
   if(fs.existsSync(filename)) {
     changes = await readChangeLog(filename);
     version = changes[0].version;
