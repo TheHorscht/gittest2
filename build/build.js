@@ -1,5 +1,4 @@
 
-console.log('BOOPYsss');
 // import * as fs from 'fs';
 // import * as AdmZip from 'adm-zip';
 // import * as path from 'path';
@@ -9,7 +8,7 @@ const fs = require('fs');
 const AdmZip = require('adm-zip');
 const path = require('path');
 const minimatch = require("minimatch");
-const pjson = require('./package.json');
+const pjson = require('../../package.json');
 
 let preview = false;
 
@@ -55,14 +54,12 @@ function is_dir(path) {
   }
 }
 
-console.log('BOOPYsss1.5');
-
 const zip = new AdmZip();
 
 const addFiles = item => {
   if(ignore_list.every(ignore_entry => !minimatch(item, ignore_entry))) {
-    if(is_dir(__dirname + '/' + item)) {
-      fs.readdirSync(__dirname + '/' + item).forEach(entry => {
+    if(is_dir(root_folder + '/' + item)) {
+      fs.readdirSync(root_folder + '/' + item).forEach(entry => {
         const child_item = `${item}/${entry}`;
         addFiles(child_item);
       });
@@ -71,18 +68,15 @@ const addFiles = item => {
       if(preview) {
         console.log(item);
       } else {
-        zip.addLocalFile(`${__dirname}/${item}`, `${name}/${folderName}`);
+        zip.addLocalFile(`${root_folder}/${item}`, `${name}/${folderName}`);
       }
     }
   }
 };
 
 fs.readdirSync(root_folder).forEach(entry => {
-  console.log(entry);
   addFiles(entry);
 });
-
-console.log('BOOPYsss1.52222');
 
 if(!preview) {
   if (!fs.existsSync(out_dir)) {
@@ -99,7 +93,6 @@ if(!preview) {
 
 
 // Publish
-console.log('BOOPYsss222');
 
 
 
@@ -146,8 +139,6 @@ async function readChangeLog(filename) {
   });
   return out;
 }
-
-console.log('BOOPYsss3333');
 
 async function upload_release() {
   const folderName = path.basename(`../${__dirname}`);
