@@ -1,5 +1,10 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
+inputs:
+  token:  # id of input
+    description: 'Token'
+    required: true
+    default: ${{ secrets.GITHUB_TOKEN }}
 runs:
   using: 'node16'
-  main: './dist/index.js'
+  main: './dist/build.js'
