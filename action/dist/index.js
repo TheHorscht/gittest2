@@ -19057,7 +19057,7 @@ if(!preview) {
 
 let token;
 try {
-  token = core.getInput('token', { required: true });
+  token = (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput)('token', { required: true });
 } catch (error) {
   (0,_actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed)(error.message);
 }

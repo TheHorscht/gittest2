@@ -94,7 +94,7 @@ import { context } from '@actions/github';
 
 let token;
 try {
-  token = core.getInput('token', { required: true });
+  token = getInput('token', { required: true });
 } catch (error) {
   setFailed(error.message);
 }
