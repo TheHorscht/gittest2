@@ -144,7 +144,8 @@ async function upload_release() {
   let result;
   result = await octokit.request('POST /repos/{owner}/{repo}/releases', {
     owner: 'TheHorscht',
-    repo: folderName,
+    // repo: folderName,
+    repo: 'gittest2',
     tag_name: version,
     name: version,
     body: changelog,
