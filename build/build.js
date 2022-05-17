@@ -80,6 +80,9 @@ const addFiles = item => {
 fs.readdirSync(root_folder).forEach(entry => {
   addFiles(entry);
 });
+
+console.log('BOOPYsss1.52222');
+
 if(!preview) {
   if (!fs.existsSync(out_dir)) {
     fs.mkdirSync(out_dir);
