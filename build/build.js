@@ -1,26 +1,16 @@
-
-// import * as fs from 'fs';
-// import * as AdmZip from 'adm-zip';
-// import * as path from 'path';
-// import * as minimatch from 'minimatch';
-// import * as pjson from './package.json';
 const fs = require('fs');
 const AdmZip = require('adm-zip');
 const path = require('path');
 const minimatch = require("minimatch");
+const commandLineArgs = require('command-line-args');
 // const pjson = require('../../package.json');
 const pjson = {
   version: "1.3.0"
 }
-
-let preview = false;
-
-const args = process.argv.slice(2);
-args.forEach(val => {
-  if(val == '--preview') {
-    preview = true;
-  }
-});
+const options = commandLineArgs([
+  { name: 'preview', alias: 'p', type: Boolean, defaultValue: false },
+  { name: 'token', alias: 't', type: String, },
+]);
 
 // Config
 const out_dir = __dirname + '/dist';
@@ -68,7 +58,7 @@ const addFiles = item => {
       });
     } else {
       const folderName = item.substr(0, item.lastIndexOf('/'));
-      if(preview) {
+      if(options.preview) {
         console.log(`${root_folder}/${item}`, `${name}/${folderName}`);
       } else {
         console.log(`Zipping: ${root_folder}/${item} into ${name}/${folderName}`);
@@ -82,7 +72,7 @@ fs.readdirSync(root_folder).forEach(entry => {
   addFiles(entry);
 });
 
-if(!preview) {
+if(!options.preview) {
   if (!fs.existsSync(out_dir)) {
     fs.mkdirSync(out_dir);
   }
@@ -92,7 +82,7 @@ if(!preview) {
 
 
 
-if(preview) {
+if(options.preview) {
   process.exit(-1);
 }
 
@@ -103,22 +93,11 @@ if(preview) {
 
 
 
-const core = require('@actions/core');
-// import { getInput, setFailed } from '@actions/core';
-// import { context } from '@actions/github';
-
-let token;
-try {
-  token = core.getInput('token', { required: true });
-} catch (error) {
-  core.setFailed(error.message);
-}
-
 const assert = require('assert');
 const axios = require('axios').default;
 const uriTemplate = require('uri-template');
 const { Octokit } = require('@octokit/core');
-const octokit = new Octokit({ auth: token });
+const octokit = new Octokit({ auth: options.token });
 const util = require('util');
 fs.readFile = util.promisify(fs.readFile);
 
@@ -173,7 +152,7 @@ async function upload_release() {
   result = await axios.post(uri.expand({ name: archiveName, label: archiveName }), file, {
     headers: {
       'Accept': 'application/vnd.github.v3+json',
-      'Authorization': `token ${process.env.GH_TOKEN}`,
+      'Authorization': `token ${options.token}`,
       'Content-Type': 'application/zip, application/octet-stream',
     },
   }).catch(err => {
