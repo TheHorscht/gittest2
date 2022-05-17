@@ -1,12 +1,3 @@
-import { getInput, setFailed } from '@actions/core';
-core.getInput('token', { required: true });
-
-
-
-
-
-
-
 const fs = require('fs');
 const AdmZip = require('adm-zip');
 const path = require('path');
@@ -98,27 +89,21 @@ if(!preview) {
 
 
 
-
-
-
 import { getInput, setFailed } from '@actions/core';
 import { context } from '@actions/github';
 
+let token;
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = getInput('who-to-greet');
+  token = core.getInput('token', { required: true });
 } catch (error) {
   setFailed(error.message);
 }
 
-
-
-// require('dotenv').config();
 const assert = require('assert');
 const axios = require('axios').default;
 const uriTemplate = require('uri-template');
 const { Octokit } = require('@octokit/core');
-const octokit = new Octokit({ auth: process.env.GH_TOKEN });
+const octokit = new Octokit({ auth: token });
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
