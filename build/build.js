@@ -22,7 +22,7 @@ args.forEach(val => {
 const out_dir = __dirname + '/dist';
 const name = path.basename(__dirname);
 const version = pjson.version;
-const root_folder = path.resolve(__dirname, '..');
+const root_folder = path.resolve(__dirname, '..', '..');
 const ignore_list = [
   '**/node_modules',
   '**/.*',
@@ -142,7 +142,8 @@ async function upload_release() {
   let changes;
   let version = `v${pjson.version}`;
   let changelog = 'New Update';
-  const filename = path.resolve(__dirname, 'changelog.txt');
+  console.log(folderName)
+  const filename = path.resolve(folderName, 'changelog.txt');
   if(fs.existsSync(filename)) {
     changes = await readChangeLog(filename);
     version = changes[0].version;
