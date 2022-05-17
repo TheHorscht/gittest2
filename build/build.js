@@ -78,6 +78,7 @@ const addFiles = item => {
 };
 
 fs.readdirSync(root_folder).forEach(entry => {
+  console.log(entry);
   addFiles(entry);
 });
 
