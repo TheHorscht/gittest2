@@ -19093,7 +19093,7 @@ async function readChangeLog(filename) {
 }
 
 async function upload_release() {
-  const folderName = path.basename(__dirname);
+  const folderName = path.basename(`../${__dirname}`);
   let changes;
   let version = `v${pjson.version}`;
   let changelog = 'New Update';
